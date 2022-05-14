@@ -8,3 +8,9 @@ git submodule update --init --recursive
 yarn install
 pre-commit install
 ```
+
+## Optional environment variables
+
+```
+ETHERSCAN_API_KEY=...
+```
