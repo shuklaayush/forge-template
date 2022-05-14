@@ -2,8 +2,10 @@ name: lint
 
 on:
   pull_request:
+    branches: [main]
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   solidity:
@@ -11,13 +13,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
           cache: "yarn"
+
+      - run: |
+          corepack enable
 
       - name: Install node dependencies
         run: yarn install --frozen-lockfile
