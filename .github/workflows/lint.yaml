@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  solidity:
+  prettier:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +27,21 @@ jobs:
 
       - name: Run prettier
         run: yarn prettier:check
+
+  slither:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Slither
+        uses: crytic/slither-action@main
+        continue-on-error: true
+        id: slither
+        with:
+          sarif: results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}
